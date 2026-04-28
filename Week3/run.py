@@ -1,4 +1,4 @@
-import Week3.datasets as datasets
+import datasets 
 
 X,Y = datasets.load_linear_example1()
 print(X)
@@ -8,7 +8,7 @@ print(Y)
 
 #ver2 test
 import importlib
-import Week3.regression as regression
+import regression 
 importlib.reload(regression)
 model = regression.LinearRegression()
 model.fit(X, Y)
