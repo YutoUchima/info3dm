@@ -20,3 +20,22 @@ plt.plot(x, y, label='y = 10 sin(0.8πx)')
 plt.legend()
 plt.savefig("ex1.1.png")
 plt.show()
+
+
+import pandas as pd
+np.random.seed(0)
+n = 20
+x_random = np.random.uniform(-1, 1, n)
+y_random = true_function(x_random)
+df = pd.DataFrame({
+    "観測点": x_random,
+    "真値": y_random
+})
+print(df)  
+
+plt.figure(figsize=(8, 5))  
+plt.plot(x, y, label='y = 10 sin(0.8πx)')
+plt.scatter(x_random, y_random, color="red", label="観測点")
+plt.legend()
+plt.savefig("ex1.2.png")
+plt.show()
