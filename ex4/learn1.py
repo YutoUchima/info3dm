@@ -22,3 +22,17 @@ print(loaded_df)
 from sklearn.linear_model import LinearRegression
 
 model = LinearRegression()
+
+
+# ex1.9 途中です
+X = df["観測点"].values.reshape(-1, 1)
+y = df["観測値"].values
+split_index = int(len(df) * 0.8)
+
+X_train = X[:split_index]
+X_test = X[split_index:]
+y_train = y[:split_index]
+y_test = y[split_index:]
+
+model.fit(X_train, y_train)
+print("fit完了")
