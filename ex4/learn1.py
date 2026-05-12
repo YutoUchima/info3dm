@@ -16,3 +16,9 @@ dataset1.ex1_4(df)
 loaded_df = dataset1.ex1_5()
 
 print(loaded_df)
+
+
+# ex1.8
+from sklearn.linear_model import LinearRegression
+
+model = LinearRegression()
