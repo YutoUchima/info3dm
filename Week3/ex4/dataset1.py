@@ -55,3 +55,6 @@ plt.legend()
 plt.savefig("ex1.3.png")
 plt.show()
 
+
+# ex4
+df.to_csv("ex1.4.tsv", sep="\t", index=False)
