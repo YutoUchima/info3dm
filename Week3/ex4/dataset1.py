@@ -5,7 +5,7 @@ font_path = '/Library/Fonts/Arial Unicode.ttf'
 font_prop = font_manager.FontProperties(fname = font_path)
 matplotlib.rcParams['font.family'] = font_prop.get_name()
 
-# ex1
+# ex1.1
 import numpy as np
 import matplotlib.pyplot as plt
 def true_function(x):
@@ -22,7 +22,7 @@ plt.savefig("ex1.1.png")
 plt.show()
 
 
-# ex2
+# ex1.2
 import pandas as pd
 np.random.seed(0)
 n = 20
@@ -42,7 +42,7 @@ plt.savefig("ex1.2.png")
 plt.show()
 
 
-# ex3
+# ex1.3
 noise = np.random.normal(loc=0.0, scale=np.sqrt(2.0), size=n) / 2
 observed_value = y_random + noise
 df["観測値"] = observed_value
@@ -56,5 +56,11 @@ plt.savefig("ex1.3.png")
 plt.show()
 
 
-# ex4
+# ex1.4
 df.to_csv("ex1.4.tsv", sep="\t", index=False)
+
+
+# ex1.5
+import pandas as pd
+df = pd.read_csv("ex1.4.tsv", sep="\t")
+print(df)
