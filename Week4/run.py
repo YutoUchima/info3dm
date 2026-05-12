@@ -8,7 +8,7 @@ print(Y)
 import regression
 
 model = regression.RidgeRegression(alpha=0)
-print(model.alpha)
+print(f"alpha = {model.alpha}")
 
 
 model.fit(ex_X, Y)
