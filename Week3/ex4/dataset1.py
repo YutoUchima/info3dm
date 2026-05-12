@@ -5,7 +5,7 @@ font_path = '/Library/Fonts/Arial Unicode.ttf'
 font_prop = font_manager.FontProperties(fname = font_path)
 matplotlib.rcParams['font.family'] = font_prop.get_name()
 
-
+# ex1
 import numpy as np
 import matplotlib.pyplot as plt
 def true_function(x):
@@ -22,6 +22,7 @@ plt.savefig("ex1.1.png")
 plt.show()
 
 
+# ex2
 import pandas as pd
 np.random.seed(0)
 n = 20
@@ -39,3 +40,18 @@ plt.scatter(x_random, y_random, color="red", label="観測点")
 plt.legend()
 plt.savefig("ex1.2.png")
 plt.show()
+
+
+# ex3
+noise = np.random.normal(loc=0.0, scale=np.sqrt(2.0), size=n) / 2
+observed_value = y_random + noise
+df["観測値"] = observed_value
+print(df)
+plt.figure(figsize=(8, 5))
+plt.plot(x, y, label='y = 10 sin(0.8πx)')
+plt.scatter(x_random, y_random, color="red", label="真値")
+plt.scatter(x_random, observed_value, color="green", label="観測値")
+plt.legend()
+plt.savefig("ex1.3.png")
+plt.show()
+
