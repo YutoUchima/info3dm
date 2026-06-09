@@ -9,9 +9,15 @@ df = pd.read_csv("merged-data.csv")
 features = [
     "temperature",
     "humidity",
-    "rainfall",
     "solar",
-    "wind_speed"
+    "wind_speed",
+    "weather_clear",
+    "weather_cloudy",
+    "weather_drizzle",
+    "weather_fog",
+    "weather_partly_cloudy",
+    "weather_sunny",
+    "weather_thunder"
 ]
 
 # =====================

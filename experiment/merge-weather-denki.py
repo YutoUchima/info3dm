@@ -2,7 +2,7 @@ import pandas as pd
 
 # 天気データ読み込み
 weather = pd.read_csv(
-    "weather-clean.csv",
+    "weather-onehot.csv",
     parse_dates=["datetime"]
 )
 

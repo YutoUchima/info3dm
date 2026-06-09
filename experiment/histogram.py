@@ -8,7 +8,6 @@ df = pd.read_csv("merged-data.csv")
 features = [
     "temperature",
     "humidity",
-    "rainfall",
     "solar",
     "wind_speed"
 ]
