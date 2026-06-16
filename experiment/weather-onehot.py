@@ -1,9 +1,98 @@
 import pandas as pd
+import jpholiday
 
 # =========================
 # CSV読み込み
 # =========================
 df = pd.read_csv("weather-clean.csv")
+
+# datetime を日時型へ変換
+df["datetime"] = pd.to_datetime(df["datetime"])
+
+# =========================
+# hour ワンホット
+# =========================
+
+# 時間取得
+df["hour"] = df["datetime"].dt.hour
+
+# ワンホット化
+hour_onehot = pd.get_dummies(
+    df["hour"],
+    prefix="hour"
+).astype(int)
+
+# =========================
+# month ワンホット
+# =========================
+
+# 月取得
+df["month"] = df["datetime"].dt.month
+
+# ワンホット化
+month_onehot = pd.get_dummies(
+    df["month"],
+    prefix="month"
+).astype(int)
+
+# =========================
+# 曜日取得
+# =========================
+
+# 月=0, 日=6
+df["weekday"] = df["datetime"].dt.weekday
+
+# 日付だけ取得
+df["date_only"] = df["datetime"].dt.date
+
+# =========================
+# 土日判定
+# =========================
+is_weekend = df["weekday"] >= 5
+
+# =========================
+# 日本の祝日判定
+# =========================
+is_japanese_holiday = df["date_only"].apply(
+    lambda x: jpholiday.is_holiday(x)
+)
+
+# =========================
+# 独自休日
+# =========================
+custom_holidays = [
+    "2022-06-23",
+    "2023-06-23",
+    "2024-06-23",
+    "2025-06-23",
+    "2026-06-23"
+]
+
+# datetime.date 型へ変換
+custom_holidays = pd.to_datetime(
+    custom_holidays
+).date
+
+# 独自休日判定
+is_custom_holiday = df["date_only"].isin(
+    custom_holidays
+)
+
+# =========================
+# 休日フラグ
+# =========================
+df["is_holiday"] = (
+    is_weekend |
+    is_japanese_holiday |
+    is_custom_holiday
+).astype(int)
+
+# =========================
+# 平日フラグ
+# =========================
+df["is_weekday"] = (
+    df["is_holiday"] == 0
+).astype(int)
 
 # =========================
 # weatherコード対応表
@@ -38,36 +127,49 @@ weather_dict = {
 # =========================
 # weather を名前へ変換
 # =========================
-df["weather_name"] = df["weather"].map(weather_dict)
+df["weather_name"] = df["weather"].map(
+    weather_dict
+)
 
 # =========================
-# ワンホットエンコーディング
+# weather ワンホット
 # =========================
 weather_onehot = pd.get_dummies(
     df["weather_name"],
     prefix="weather"
-)
-
-# True/False → 1/0 に変換
-weather_onehot = weather_onehot.astype(int)
+).astype(int)
 
 # =========================
-# 元データへ結合
+# 全特徴量結合
 # =========================
 df = pd.concat(
-    [df, weather_onehot],
+    [
+        df,
+        hour_onehot,
+        month_onehot,
+        weather_onehot
+    ],
     axis=1
 )
 
-# 元の weather 列を消す場合
+# =========================
+# 不要列削除
+# =========================
 df = df.drop(
-    columns=["weather", "weather_name"]
+    columns=[
+        "weather",
+        "weather_name",
+        "hour",
+        "month",
+        "weekday",
+        "date_only"
+    ]
 )
 
 # =========================
-# 表示
+# 確認
 # =========================
-print(df.to_string())
+print(df.head(20).to_string())
 
 # =========================
 # 保存
