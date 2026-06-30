@@ -8,7 +8,6 @@ from sklearn.ensemble import RandomForestRegressor
 # =========================
 df = pd.read_csv("merged-data.csv")
 
-# datetime変換
 df["datetime"] = pd.to_datetime(df["datetime"])
 
 
@@ -35,44 +34,21 @@ features = [
     "is_holiday",
     "is_weekday",
 
-    "hour_0",
-    "hour_1",
-    "hour_2",
-    "hour_3",
-    "hour_4",
-    "hour_5",
-    "hour_6",
-    "hour_7",
-    "hour_8",
-    "hour_9",
-    "hour_10",
-    "hour_11",
-    "hour_12",
-    "hour_13",
-    "hour_14",
-    "hour_15",
-    "hour_16",
-    "hour_17",
-    "hour_18",
-    "hour_19",
-    "hour_20",
-    "hour_21",
-    "hour_22",
-    "hour_23",
+]
 
-    "month_1",
-    "month_2",
-    "month_3",
-    "month_4",
-    "month_5",
-    "month_6",
-    "month_7",
-    "month_8",
-    "month_9",
-    "month_10",
-    "month_11",
-    "month_12",
 
+# hour追加
+for i in range(24):
+    features.append(f"hour_{i}")
+
+
+# month追加
+for i in range(1,13):
+    features.append(f"month_{i}")
+
+
+# weather追加
+weather_features = [
     "weather_clear",
     "weather_cloudy",
     "weather_drizzle",
@@ -81,6 +57,9 @@ features = [
     "weather_sunny",
     "weather_thunder"
 ]
+
+features += weather_features
+
 
 
 # =========================
@@ -108,80 +87,118 @@ print("学習完了")
 
 
 # =========================
-# 未来の予測データ入力
+# 予測条件入力
+# =========================
+
+print("\n=== 予測条件入力 ===")
+
+
+temperature = float(
+    input("気温(℃)：")
+)
+
+humidity = float(
+    input("湿度(%)：")
+)
+
+solar = float(
+    input("日照量：")
+)
+
+wind_speed = float(
+    input("風速(m/s)：")
+)
+
+
+holiday = int(
+    input("休日なら1 平日なら0：")
+)
+
+
+weekday = 1 - holiday
+
+
+hour = int(
+    input("予測する時間(0〜23)：")
+)
+
+
+month = int(
+    input("予測する月(1〜12)：")
+)
+
+
+print("""
+天気を入力してください
+1:clear
+2:cloudy
+3:drizzle
+4:fog
+5:partly_cloudy
+6:sunny
+7:thunder
+""")
+
+
+weather = int(
+    input("天気番号：")
+)
+
+
+
+# =========================
+# 入力データ作成
 # =========================
 
 future = {
 
-    "temperature": 32.3,
-    "humidity": 82,
-    "solar": 3.07,
-    "wind_speed": 4.7,
+    "temperature": temperature,
+    "humidity": humidity,
+    "solar": solar,
+    "wind_speed": wind_speed,
 
-    "is_holiday": 0,
-    "is_weekday": 1,
-
-
-    # 14時の場合
-    "hour_0":0,
-    "hour_1":0,
-    "hour_2":0,
-    "hour_3":0,
-    "hour_4":0,
-    "hour_5":0,
-    "hour_6":0,
-    "hour_7":0,
-    "hour_8":0,
-    "hour_9":0,
-    "hour_10":0,
-    "hour_11":0,
-    "hour_12":0,
-    "hour_13":1,
-    "hour_14":0,
-    "hour_15":0,
-    "hour_16":0,
-    "hour_17":0,
-    "hour_18":0,
-    "hour_19":0,
-    "hour_20":0,
-    "hour_21":0,
-    "hour_22":0,
-    "hour_23":0,
-
-
-    # 6月の場合
-    "month_1":0,
-    "month_2":0,
-    "month_3":0,
-    "month_4":0,
-    "month_5":0,
-    "month_6":1,
-    "month_7":0,
-    "month_8":0,
-    "month_9":0,
-    "month_10":0,
-    "month_11":0,
-    "month_12":0,
-
-
-    # 天気（晴れ）
-    "weather_clear":0,
-    "weather_cloudy":1,
-    "weather_drizzle":0,
-    "weather_fog":0,
-    "weather_partly_cloudy":0,
-    "weather_sunny":0,
-    "weather_thunder":0
+    "is_holiday": holiday,
+    "is_weekday": weekday
 
 }
 
 
 
-# DataFrame化
+# hourワンホット
+for i in range(24):
 
+    if i == hour:
+        future[f"hour_{i}"] = 1
+    else:
+        future[f"hour_{i}"] = 0
+
+
+
+# monthワンホット
+for i in range(1,13):
+
+    if i == month:
+        future[f"month_{i}"] = 1
+    else:
+        future[f"month_{i}"] = 0
+
+
+
+# weatherワンホット
+for i, name in enumerate(weather_features, start=1):
+
+    if i == weather:
+        future[name] = 1
+    else:
+        future[name] = 0
+
+
+
+# DataFrame化
 future_df = pd.DataFrame(
     [future]
 )
+
 
 
 # =========================
@@ -193,7 +210,8 @@ prediction = model.predict(
 )
 
 
-print("====================")
+
+print("\n====================")
 print("予測電気消費量")
-print(prediction[0], "kW")
+print(round(prediction[0],2),"kW")
 print("====================")
