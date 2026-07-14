@@ -2,6 +2,8 @@ import pandas as pd
 
 from sklearn.ensemble import RandomForestRegressor
 
+from sklearn.preprocessing import StandardScaler
+from sklearn.mixture import GaussianMixture
 
 # =========================
 # CSV読み込み
@@ -20,6 +22,45 @@ train_df = df[
     (df["datetime"] < "2025-01-01")
 ]
 
+# =========================
+# 欠損値削除
+# =========================
+train_df = train_df.dropna(
+    subset=[
+        "temperature",
+        "humidity",
+        "solar",
+        "wind_speed"
+    ]
+)
+# =========================
+# GMMクラスタリング
+# =========================
+
+cluster_features = [
+    "temperature",
+    "humidity",
+    "solar",
+    "wind_speed"
+]
+
+X_cluster = train_df[cluster_features]
+
+scaler = StandardScaler()
+
+X_cluster = train_df[cluster_features]
+
+X_cluster_scaled = scaler.fit_transform(X_cluster)
+
+gmm = GaussianMixture(
+    n_components=4,
+    random_state=0
+)
+
+train_df["cluster"] = gmm.fit_predict(
+    X_cluster_scaled
+)
+
 
 # =========================
 # 特徴量
@@ -30,6 +71,8 @@ features = [
     "humidity",
     "solar",
     "wind_speed",
+
+    "cluster",
 
     "is_holiday",
     "is_weekday",
@@ -146,6 +189,19 @@ weather = int(
 
 
 
+cluster_input = pd.DataFrame([{
+    "temperature": temperature,
+    "humidity": humidity,
+    "solar": solar,
+    "wind_speed": wind_speed
+}])
+
+cluster_scaled = scaler.transform(cluster_input)
+
+cluster = gmm.predict(cluster_scaled)[0]
+
+print(f"\n推定クラスタ：{cluster}")
+
 # =========================
 # 入力データ作成
 # =========================
@@ -156,6 +212,8 @@ future = {
     "humidity": humidity,
     "solar": solar,
     "wind_speed": wind_speed,
+
+    "cluster": cluster,
 
     "is_holiday": holiday,
     "is_weekday": weekday
