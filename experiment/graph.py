@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # CSV読み込み
-df = pd.read_csv("denki-clean.csv")
+df = pd.read_csv("denki_clean.csv")
 
 # datetime を日時型に変換
 df["datetime"] = pd.to_datetime(df["datetime"])

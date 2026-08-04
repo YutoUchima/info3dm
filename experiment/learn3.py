@@ -6,7 +6,7 @@ from sklearn.metrics import r2_score, mean_squared_error
 # =========================
 # CSV読み込み
 # =========================
-df = pd.read_csv("merged-data.csv")
+df = pd.read_csv("merged_data.csv")
 
 # datetime を日時型へ変換
 df["datetime"] = pd.to_datetime(df["datetime"])

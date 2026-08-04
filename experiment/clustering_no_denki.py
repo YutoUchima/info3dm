@@ -8,7 +8,7 @@ from sklearn.decomposition import PCA
 # =========================
 # CSV読み込み
 # =========================
-df = pd.read_csv("merged-data.csv")
+df = pd.read_csv("merged_data.csv")
 
 # datetimeを日時型へ変換
 df["datetime"] = pd.to_datetime(df["datetime"])

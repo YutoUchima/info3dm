@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 # =========================
 # CSV読み込み
 # =========================
-df = pd.read_csv("merged-data.csv")
+df = pd.read_csv("merged_data.csv")
 
 # =========================
 # 通常特徴量

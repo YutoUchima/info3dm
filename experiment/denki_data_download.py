@@ -13,7 +13,7 @@ while d <= end:
     date_str = d.strftime("%Y%m%d")
 
     # 年/月フォルダ作成
-    folder = os.path.join("denki-power-data", year, month)
+    folder = os.path.join("denki_power_data", year, month)
     os.makedirs(folder, exist_ok=True)
 
     # ダウンロードURL

@@ -5,7 +5,7 @@ import glob
 # 全CSV取得
 # =========================
 files = glob.glob(
-    "denki-power-data/**/*.csv",
+    "denki_power_data/**/*.csv",
     recursive=True
 )
 
@@ -106,9 +106,9 @@ print(all_power.to_string())
 # 保存
 # =========================
 all_power.to_csv(
-    "dennki-clean.csv",
+    "dennki_clean.csv",
     index=False,
     encoding="utf-8-sig"
 )
 
-print("\ndenki-clean.csv saved.")
+print("\ndenki_clean.csv saved.")

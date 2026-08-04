@@ -2,13 +2,13 @@ import pandas as pd
 
 # 天気データ読み込み
 weather = pd.read_csv(
-    "weather-onehot.csv",
+    "weather_onehot.csv",
     parse_dates=["datetime"]
 )
 
 # 電力データ読み込み
 power = pd.read_csv(
-    "denki-clean.csv",
+    "denki_clean.csv",
     parse_dates=["datetime"]
 )
 
@@ -25,6 +25,6 @@ print("\n===== MERGED DATA =====")
 print(merged.to_string())
 
 # 保存
-merged.to_csv("merged-data.csv", index=False)
+merged.to_csv("merged_data.csv", index=False)
 
-print("\nmerged-data.csv saved.")
+print("\nmerged_data.csv saved.")

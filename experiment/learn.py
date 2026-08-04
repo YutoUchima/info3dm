@@ -5,7 +5,7 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import r2_score, mean_squared_error
 
 # CSV読み込み
-df = pd.read_csv("merged-data.csv")
+df = pd.read_csv("merged_data.csv")
 
 # 特徴量
 features = [

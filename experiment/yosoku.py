@@ -8,7 +8,7 @@ from sklearn.mixture import GaussianMixture
 # =========================
 # CSV読み込み
 # =========================
-df = pd.read_csv("merged-data.csv")
+df = pd.read_csv("merged_data.csv")
 
 df["datetime"] = pd.to_datetime(df["datetime"])
 

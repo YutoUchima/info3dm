@@ -4,7 +4,7 @@ import glob
 # =========================
 # 全CSV取得
 # =========================
-files = glob.glob("weather-data/*.csv")
+files = glob.glob("weather_data/*.csv")
 
 weather_list = []
 
@@ -102,9 +102,9 @@ print(all_weather.to_string())
 # 保存
 # =========================
 all_weather.to_csv(
-    "weather-clean.csv",
+    "weather_clean.csv",
     index=False,
     encoding="utf-8"
 )
 
-print("\nweather-clean.csv saved.")
+print("\nweather_clean.csv saved.")

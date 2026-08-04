@@ -4,7 +4,7 @@ import jpholiday
 # =========================
 # CSV読み込み
 # =========================
-df = pd.read_csv("weather-clean.csv")
+df = pd.read_csv("weather_clean.csv")
 
 # datetime を日時型へ変換
 df["datetime"] = pd.to_datetime(df["datetime"])
@@ -175,9 +175,9 @@ print(df.head(20).to_string())
 # 保存
 # =========================
 df.to_csv(
-    "weather-onehot.csv",
+    "weather_onehot.csv",
     index=False,
     encoding="utf-8-sig"
 )
 
-print("\nweather-onehot.csv saved.")
+print("\nweather_onehot.csv saved.")
