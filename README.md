@@ -8,9 +8,11 @@
 1.データの収集・変換
 
 -denki_data_download.py 
+
 　　電力消費量のデータをサイトから収集し、denki_power_dataというフォルダに保存。
     
 -denki_change.py
+
 　　集めた電気消費量データから1時間ごとの消費量を取り出す。
 
 2.グラフでの表示
