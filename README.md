@@ -13,7 +13,15 @@
     
 -denki_change.py
 
-　　集めた電気消費量データから1時間ごとの消費量を取り出す。
+　　集めた電気消費量データから1時間ごとの消費量のみを取り出し、denki_clean.csvを作成。
+
+-weather_change.py
+
+　　サイトから収集した気象データから、実験に必要な項目のみを取り出し、weather_clean.csvに保存。
+
+-weather_onehot.py
+
+　　weather_clean.csvの天気の項目を、onehotで晴れか曇りか雨など0,1での表記に変換しweather_onehot.csvに保存。
 
 2.グラフでの表示
 
