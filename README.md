@@ -10,11 +10,11 @@
 
 -denki_data_download.py 
 
-　　電力消費量のデータをサイトから収集し、denki_power_dataというフォルダに保存。
+　　電力消費量のファイルをサイトから収集し、denki_power_dataというフォルダに保存。
     
 -denki_change.py
 
-　　集めた電気消費量データから1時間ごとの消費量のみを取り出し、denki_clean.csvを作成。
+　　集めた電気消費量ファイルから1時間ごとの消費量のみを取り出し、denki_clean.csvを作成。24行を指定しているのは、ファイルの中にある1時間ごとの電力消費量を取得するために0~23時の分の24行である。
 
 -weather_change.py
 
